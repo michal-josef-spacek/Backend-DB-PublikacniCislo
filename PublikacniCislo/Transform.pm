@@ -51,10 +51,9 @@ sub person_db2obj {
 	my ($self, $person_db) = @_;
 
 	return Data::PublikacniCislo::Person->new(
-		'first_upload_at' => $person_db->first_upload_at,
 		'id' => $person_db->person_id,
 		'name' => $self->_decode_utf8($person_db->name),
-		'wm_username' => $self->_decode_utf8($person_db->wm_username),
+		'email' => $person_db->email,
 	);
 }
 
@@ -65,8 +64,6 @@ sub person_obj2db {
 		$self->_check_value('person_id', $person_obj, ['id']),
 		$self->_check_value('email', $person_obj, ['email']),
 		$self->_check_value('name', $person_obj, ['name']),
-		$self->_check_value('wm_username', $person_obj, ['wm_username']),
-		$self->_check_value('first_upload_at', $person_obj, ['first_upload_at']),
 	};
 }
 
