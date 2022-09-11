@@ -8,6 +8,7 @@ use Data::PublikacniCislo::HashType;
 use Data::PublikacniCislo::Person;
 use Data::PublikacniCislo::PersonRole;
 use Data::PublikacniCislo::PublicationNumber;
+use Data::PublikacniCislo::PublicationNumberPrefix;
 use Data::PublikacniCislo::Role;
 use Encode qw(is_utf8);
 use Error::Pure qw(err);
@@ -105,6 +106,26 @@ sub publication_number_obj2db {
 		$self->_check_value('publication_number_id', $pn_obj, ['id']),
 		$self->_check_value('publication_number', $pn_obj, ['publication_number']),
 		$self->_check_value('created_by_id', $pn_obj, ['created_by', 'id']),
+	};
+}
+
+sub publication_number_prefix_db2obj {
+	my ($self, $pnp_db) = @_;
+
+	return Data::PublikacniCislo::PublicationNumberPrefix->new(
+		'created_by' => $self->person_db2obj($pnp_db->created_by),
+		'id' => $pnp_db->publication_number_prefix_id,
+		'prefix' => $pnp_db->publication_number_prefix,
+	);
+}
+
+sub publication_number_prefix_obj2db {
+	my ($self, $pnp_obj) = @_;
+
+	return {
+		$self->_check_value('publication_number_prefix_id', $pnp_obj, ['id']),
+		$self->_check_value('publication_number_prefix', $pnp_obj, ['prefix']),
+		$self->_check_value('created_by_id', $pnp_obj, ['created_by', 'id']),
 	};
 }
 

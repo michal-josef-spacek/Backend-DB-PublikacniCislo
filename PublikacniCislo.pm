@@ -97,6 +97,16 @@ sub fetch_publication_number {
 	return $self->{'_transform'}->publication_number_db2obj($pn_db);
 }
 
+sub fetch_publication_number_prefix {
+	my ($self, $cond_hr) = @_;
+
+	my $pnp_db = $self->{'schema'}->resultset('PublicationNumberPrefix')->search($cond_hr)
+		->single;
+
+	return unless defined $pnp_db;
+	return $self->{'_transform'}->publication_number_prefix_db2obj($pnp_db);
+}
+
 sub fetch_role {
 	my ($self, $role_name) = @_;
 
@@ -160,6 +170,17 @@ sub save_publication_number {
 
 	return unless defined $pn_db;
 	return $self->{'_transform'}->publication_number_db2obj($pn_db);
+}
+
+sub save_publication_number_prefix {
+	my ($self, $pnp_obj) = @_;
+
+	my $pnp_db = $self->{'schema'}->resultset('PublicationNumberPrefix')->create(
+		$self->{'_transform'}->publication_number_obj2db($pnp_obj),
+	);
+
+	return unless defined $pnp_db;
+	return $self->{'_transform'}->publication_number_prefix_db2obj($pnp_db);
 }
 
 1;
