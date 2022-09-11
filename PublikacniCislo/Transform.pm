@@ -5,6 +5,7 @@ use warnings;
 
 use Class::Utils qw(set_params);
 use Data::PublikacniCislo::HashType;
+use Data::PublikacniCislo::Link;
 use Data::PublikacniCislo::Person;
 use Data::PublikacniCislo::PersonRole;
 use Data::PublikacniCislo::PublicationNumber;
@@ -47,6 +48,16 @@ sub hash_type_obj2db {
 		'name' => $hash_type_obj->name,
 		'active' => $hash_type_obj->active,
 	};
+}
+
+sub link_db2obj {
+	my ($self, $link_db) = @_;
+
+	return Data::PublikacniCislo::Link->new(
+		'link' => $link_db->link,
+		'link_type' => $self->link_type_db2obj($link_db->link_type),
+		'created_by' => $self->person_db2obj($link_db->created_by),
+	);
 }
 
 sub person_db2obj {
