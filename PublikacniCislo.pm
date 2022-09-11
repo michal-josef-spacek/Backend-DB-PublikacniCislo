@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Class::Utils qw(set_params);
-use Commons::Vote::Backend::Transform;
+use Backend::DB::PublikacniCislo::Transform;
 use English;
 use Error::Pure qw(err);
 use Unicode::UTF8 qw(decode_utf8);
@@ -87,6 +87,16 @@ sub fetch_people {
 	} $self->{'schema'}->resultset('Person')->search($cond_hr, $attr_hr);
 }
 
+sub fetch_publication_number {
+	my ($self, $cond_hr) = @_;
+
+	my $pn_db = $self->{'schema'}->resultset('PublicationNumber')->search($cond_hr)
+		->single;
+
+	return unless defined $pn_db;
+	return $self->{'_transform'}->publication_number_db2obj($pn_db);
+}
+
 sub fetch_role {
 	my ($self, $role_name) = @_;
 
@@ -139,6 +149,17 @@ sub save_person_role {
 
 	return unless defined $person_role_db;
 	return $self->{'_transform'}->person_role_db2obj($person_role_db);
+}
+
+sub save_publication_number {
+	my ($self, $pn_obj) = @_;
+
+	my $pn_db = $self->{'schema'}->resultset('PublicationNumber')->create(
+		$self->{'_transform'}->publication_number_obj2db($pn_obj),
+	);
+
+	return unless defined $pn_db;
+	return $self->{'_transform'}->publication_number_db2obj($pn_db);
 }
 
 1;

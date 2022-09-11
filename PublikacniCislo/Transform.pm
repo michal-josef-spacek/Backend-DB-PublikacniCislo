@@ -7,6 +7,7 @@ use Class::Utils qw(set_params);
 use Data::PublikacniCislo::HashType;
 use Data::PublikacniCislo::Person;
 use Data::PublikacniCislo::PersonRole;
+use Data::PublikacniCislo::PublicationNumber;
 use Data::PublikacniCislo::Role;
 use Encode qw(is_utf8);
 use Error::Pure qw(err);
@@ -84,6 +85,26 @@ sub person_role_obj2db {
 		$self->_check_value('competition_id', $person_role_obj, ['competition', 'id']),
 		$self->_check_value('person_id', $person_role_obj, ['person', 'id']),
 		$self->_check_value('role_id', $person_role_obj, ['role', 'id']),
+	};
+}
+
+sub publication_number_db2obj {
+	my ($self, $pn_db) = @_;
+
+	return Data::PublikacniCislo::PublicationNumber->new(
+		'created_by' => $self->person_db2obj($pn_db->created_by),
+		'id' => $pn_db->publication_number_id,
+		'publication_number' => $pn_db->publication_number,
+	);
+}
+
+sub publication_number_obj2db {
+	my ($self, $pn_obj) = @_;
+
+	return {
+		$self->_check_value('publication_number_id', $pn_obj, ['id']),
+		$self->_check_value('publication_number', $pn_obj, ['publication_number']),
+		$self->_check_value('created_by_id', $pn_obj, ['created_by', 'id']),
 	};
 }
 
