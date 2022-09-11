@@ -59,6 +59,16 @@ sub fetch_hash_type_name {
 	return $self->{'_transform'}->hash_type_db2obj($hash_type_db);
 }
 
+sub fetch_link_type {
+	my ($self, $cond_hr) = @_;
+
+	my $link_type_db = $self->{'schema'}->resultset('LinkType')->search($cond_hr)
+		->single;
+
+	return unless defined $link_type_db;
+	return $self->{'_transform'}->link_type_db2obj($link_type_db);
+}
+
 sub fetch_person {
 	my ($self, $cond_hr) = @_;
 
