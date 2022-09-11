@@ -115,10 +115,12 @@ sub person_role_obj2db {
 sub publication_number_db2obj {
 	my ($self, $pn_db) = @_;
 
+	my @links = map { $self->link_db2obj($_) } $pn_db->links;
 	return Data::PublikacniCislo::PublicationNumber->new(
 		'created_by' => $self->person_db2obj($pn_db->created_by),
 		'id' => $pn_db->publication_number_id,
 		'publication_number' => $pn_db->publication_number,
+		'links' => \@links,
 	);
 }
 
