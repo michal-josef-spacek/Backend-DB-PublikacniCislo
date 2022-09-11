@@ -6,6 +6,7 @@ use warnings;
 use Class::Utils qw(set_params);
 use Data::PublikacniCislo::HashType;
 use Data::PublikacniCislo::Link;
+use Data::PublikacniCislo::LinkType;
 use Data::PublikacniCislo::Person;
 use Data::PublikacniCislo::PersonRole;
 use Data::PublikacniCislo::PublicationNumber;
@@ -57,6 +58,17 @@ sub link_db2obj {
 		'link' => $link_db->link,
 		'link_type' => $self->link_type_db2obj($link_db->link_type),
 		'created_by' => $self->person_db2obj($link_db->created_by),
+	);
+}
+
+sub link_type_db2obj {
+	my ($self, $link_type_db) = @_;
+
+	return Data::PublikacniCislo::LinkType->new(
+		'id' => $link_type_db->link_type_id,
+		'created_by' => $self->person_db2obj($link_type_db->created_by),
+		'name' => $link_type_db->link_type,
+		'wd_property' => $link_type_db->wikidata_property,
 	);
 }
 
