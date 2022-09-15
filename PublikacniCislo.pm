@@ -108,6 +108,14 @@ sub fetch_publication_number {
 	return $self->{'_transform'}->publication_number_db2obj($pn_db);
 }
 
+sub fetch_publication_numbers {
+	my ($self, $cond_hr, $attr_hr) = @_;
+
+	return map {
+		$self->{'_transform'}->publication_number_db2obj($_);
+	} $self->{'schema'}->resultset('PublicationNumber')->search($cond_hr, $attr_hr);
+}
+
 sub fetch_publication_number_prefix {
 	my ($self, $cond_hr) = @_;
 
