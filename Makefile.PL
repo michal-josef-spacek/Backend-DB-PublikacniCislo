@@ -17,6 +17,7 @@ license 'bsd';
 name 'Backend-DB-PublikacniCislo';
 readme_from 'PublikacniCislo.pm';
 recursive_author_tests('xt');
+requires 'Backend::DB' => 0;
 requires 'Class::Utils' => 0;
 requires 'Encode' => 0;
 requires 'Error::Pure' => 0;

@@ -29,6 +29,7 @@ no_index:
     - t
     - xt
 requires:
+  Backend::DB: 0
   Class::Utils: 0
   Encode: 0
   Error::Pure: 0

@@ -1,5 +1,6 @@
 package Backend::DB::PublikacniCislo;
 
+use base qw(Backend::DB);
 use strict;
 use warnings;
 
